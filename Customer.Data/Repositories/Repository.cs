@@ -12,10 +12,10 @@ namespace Customer.Data.Repositories
 {
     public class Repository<TModel> : IRepository<TModel> where TModel : ModelBase
     {
-        private readonly DbContext _dbContext;
+        private readonly CustomerDbContext _dbContext;
         protected readonly DbSet<TModel> ModelDbSets;
 
-        public Repository(DbContext dbContext)
+        public Repository(CustomerDbContext dbContext)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException();
             ModelDbSets = _dbContext.Set<TModel>();

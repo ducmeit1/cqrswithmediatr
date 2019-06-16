@@ -1,15 +1,16 @@
 using System.ComponentModel.DataAnnotations;
+using Customer.Domain.Dtos;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace Customer.Domain.Commands
 {
-    public class CreateCustomerCommand : CommandBase
+    public class CreateCustomerCommand : CommandBase<CustomerDto>
     {
         public CreateCustomerCommand()
         {
         }
-        
+
         [JsonConstructor]
         public CreateCustomerCommand(string name, string email, string address, int age, string phoneNumber)
         {
@@ -38,7 +39,7 @@ namespace Customer.Domain.Commands
         public int Age { get; set; }
         [JsonProperty("phone_number")]
         [Required]
-        [RegularExpression(@"^[\d-]{10, 20}$")]
+        [Phone]
         public string PhoneNumber { get; set; }
     }
 }

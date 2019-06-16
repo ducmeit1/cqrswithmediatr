@@ -3,22 +3,27 @@ using System.Threading;
 using System.Threading.Tasks;
 using Customer.Data.IRepositories;
 using Customer.Domain.Commands;
+using Customer.Domain.Dtos;
+using Customer.Service.Dxos;
 using MediatR;
 
 namespace Customer.Service.Services
 {
-    public class CreateCustomerHandler : AsyncRequestHandler<CreateCustomerCommand>
+    public class CreateCustomerHandler : IRequestHandler<CreateCustomerCommand, CustomerDto>
     {
         private readonly ICustomerRepository _customerRepository;
+        private readonly ICustomerDxos _customerDxos;
         private readonly IMediator _mediator;
 
-        public CreateCustomerHandler(ICustomerRepository customerRepository, IMediator mediator)
+        public CreateCustomerHandler(ICustomerRepository customerRepository, IMediator mediator, ICustomerDxos customerDxos)
         {
             _customerRepository = customerRepository ?? throw new ArgumentNullException(nameof(customerRepository));
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _customerDxos = customerDxos ?? throw new ArgumentNullException(nameof(customerDxos));
         }
 
-        protected override async Task Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
+
+        public async  Task<CustomerDto> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
         {
             if (await _customerRepository.EmailExistAsync(request.Email))
             {
@@ -35,6 +40,9 @@ namespace Customer.Service.Services
             }
 
             await _mediator.Publish(new Domain.Events.CustomerCreatedEvent(customer.Id), cancellationToken);
+
+            var customerDto = _customerDxos.MapCustomerDto(customer);
+            return customerDto;
         }
     }
 }

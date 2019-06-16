@@ -16,10 +16,10 @@ namespace Customer.Data
         }
 
         protected abstract TContext CreateNewInstance(DbContextOptions<TContext> options);
-        
+
         private TContext Create()
         {
-            return Create("Data Source=localhost;Initial Catalog=CustomerDB;User Id=sa;Password=123456;");
+            return Create("Data Source=localhost;Initial Catalog=CustomerDB;User Id=sa;Password=Demo123456@;");
         }
 
         private TContext Create(string connectionString)
