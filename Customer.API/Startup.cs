@@ -28,11 +28,11 @@ namespace Customer.API
         {
             // Read configuration and combine appsettings.json and appsettings.env.json by environment of deployment
             var builder = new ConfigurationBuilder()
-                .SetBasePath("env.ContentRootPath")
+                .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", false, true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
                 .AddEnvironmentVariables();
-            
+
             Configuration = builder.Build();
         }
 
@@ -44,30 +44,31 @@ namespace Customer.API
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddDbContext<CustomerDbContext>(options =>
                 {
-                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), 
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
                         sqlOptions =>
                         {
                             sqlOptions.EnableRetryOnFailure(maxRetryCount: 3, maxRetryDelay: TimeSpan.FromSeconds(30),
                                 errorNumbersToAdd: null);
                         });
                 });
-            services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
             services.AddSwaggerGen(s =>
             {
-                s.SwaggerDoc("v1", new Info {Title = "Customer API", Version = "v1"});
+                s.SwaggerDoc("v1", new Info { Title = "Customer API", Version = "v1" });
                 s.DescribeAllParametersInCamelCase();
                 s.DescribeAllEnumsAsStrings();
             });
-            
+
             //Add DIs
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<ICustomerDxos, CustomerDxos>();
 
+            services.AddMediatR();
+
             services.AddLogging();
-            
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            
-            
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,7 +83,7 @@ namespace Customer.API
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            
+
             app.UseHttpsRedirection();
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Customer API V1"); });
