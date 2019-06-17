@@ -18,11 +18,11 @@ namespace Customer.Data
 
             foreach (var entry in entries)
             {
-                if (entry.State is EntityState.Added) ((ModelBase) entry.Entity).CreatedAt = DateTime.UtcNow;
-                ((ModelBase) entry.Entity).UpdatedAt = DateTime.UtcNow;
+                if (entry.State is EntityState.Added) ((ModelBase)entry.Entity).CreatedAt = DateTime.UtcNow;
+                ((ModelBase)entry.Entity).UpdatedAt = DateTime.UtcNow;
             }
         }
-        
+
         /// <summary>
         ///     Auto find and apply all IEntityTypeConfiguration to modelBuilder
         /// </summary>
@@ -42,7 +42,7 @@ namespace Customer.Data
                 .Where(it => it.i != null)
                 .Select(it => (et: it.i.GetGenericArguments()[0], cfgObj: Activator.CreateInstance(it.t)))
                 .Select(it =>
-                    applyConfigurationMethodInfo.MakeGenericMethod(it.et).Invoke(modelBuilder, new[] {it.cfgObj}))
+                    applyConfigurationMethodInfo.MakeGenericMethod(it.et).Invoke(modelBuilder, new[] { it.cfgObj }))
                 .ToList();
         }
     }
