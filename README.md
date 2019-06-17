@@ -37,3 +37,19 @@ dotnet run
 ```
 
 - Access to: localhost:5000 or localhost:5001 with path: /swagger
+
+##Run with docker-compose
+- Requirement:
+  - Installed docker and docker-compose
+  
+```
+docker-compose build
+docker-compose up
+```
+
+##Turn off auto migrate
+- Please comment this line in `Startup.cs`
+
+```
+app.UseAutoMigrateDatabase<CustomerDbContext>();
+```
