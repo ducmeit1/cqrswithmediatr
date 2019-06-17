@@ -74,6 +74,8 @@ namespace Customer.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            //You may would disable auto migrate if needed
+            app.UseAutoMigrateDatabase<CustomerDbContext>();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -85,6 +87,7 @@ namespace Customer.API
             }
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Customer API V1"); });
             app.UseMvc();

@@ -21,7 +21,7 @@ namespace Customer.API.Controllers
         /// </summary>
         /// <param name="id">Id of customer</param>
         /// <returns>Customer information</returns>
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         [ProducesResponseType(typeof(CustomerDto), 200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -42,5 +42,5 @@ namespace Customer.API.Controllers
         {
             return Ok(await CommandAsync(command));
         }
-}
+    }
 }
