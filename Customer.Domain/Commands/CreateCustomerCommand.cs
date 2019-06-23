@@ -24,22 +24,22 @@ namespace Customer.Domain.Commands
         [JsonProperty("name")]
         [Required]
         [MaxLength(255)]
-        public string Name { get; set; }
+        public string Name { get; }
         [JsonProperty("email")]
         [Required]
         [MaxLength(255)]
         [EmailAddress]
-        public string Email { get; set; }
+        public string Email { get; }
         [JsonProperty("address")]
         [Required]
         [MaxLength(255)]
-        public string Address { get; set; }
+        public string Address { get; }
         [JsonProperty("age")]
         [Required]
-        public int Age { get; set; }
+        public int Age { get; }
         [JsonProperty("phone_number")]
         [Required]
         [Phone]
-        public string PhoneNumber { get; set; }
+        public string PhoneNumber { get; }
     }
 }
