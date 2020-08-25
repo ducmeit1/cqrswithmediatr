@@ -1,3 +1,9 @@
+# CQRS With MediaTR
+
+> Read my tutorial at:
+> - Part1: https://medium.com/@ducmeit/net-core-using-cqrs-pattern-with-mediatr-part-1-55557e90931b
+> - Part2: https://medium.com/@ducmeit/net-core-using-cqrs-pattern-with-mediatr-part-2-cc55763e83f0
+
 ## Example working CQRS and Sub/Pub with MediatR
 
 ### Requirements:
